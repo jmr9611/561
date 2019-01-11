@@ -15,6 +15,6 @@ def testScraper():
 def testParsing():
     print(parser.parseBitrate(scraper.getBitrate(testPcapFileName)))
     print(parser.parseRTTOutput(scraper.getRTT(testPcapFileName, testIP)))
-
+    print(parser.parsePacketLoss(scraper.getPacketLoss(testPcapFileName, testIP)))
 testScraper()
 # testParsing()

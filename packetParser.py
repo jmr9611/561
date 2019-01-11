@@ -43,7 +43,7 @@ def parseBitrate(output):
 # string -> int
 # returns the number of dropped packets as a single number
 def parsePacketLoss(output):
-    totalPacketCount = 0 # in case this is necessary 
+    totalPacketCount = 0 # in case this is necessary later
     lostPacketCount = 0
     for line in output:
         totalPacketCount += 1
