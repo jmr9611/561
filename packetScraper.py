@@ -1,4 +1,3 @@
-# my first file
 import subprocess
 
 # string -> string
@@ -19,7 +18,7 @@ def getRTT(pcapFileName, ipName):
 
  # string -> string
  # returns bytes and duration for obtaining bitrate
- # tshark -r $pcapFileName -q -z conv,tcp 
+ # tshark -r $pcapFileName -q -z conv,tcp
 def getBitrate(pcapFileName):
     return subprocess.check_output(
     "tshark -r " + pcapFileName + " -q -z conv,tcp", shell=True)
@@ -31,33 +30,3 @@ def getPacketLoss(pcapFileName, ipName):
     return subprocess.check_output(
     "tshark -r " + pcapFileName + " -Y \'ip.addr == " + ipName + "\' -T fields -e tcp.analysis.lost_segment",
     shell=True)
-
-# string -> [string]
-# returns list of ip addresses...?
-def parseResponsesOutput(output):
-    return
-
-# string -> double
-# returns round trip time as a single number
-def parseRTTOutput(output):
-    bitrate = output;
-    return
-
-# string -> double
-# returns the bitrate as a single number, calculated from bytes/duration
-def parseBitrate(output):
-	return
-
-def testShellCmds():
-    netflixPcapFileName = "netflix.pcapng"
-    testPcapFileName = "testpcap.pcapng"
-    testIP = "10.8.106.202"
-    print(getResponses(netflixPcapFileName))
-    print(getRTT(testPcapFileName, testIP))
-    print(getBitrate(testPcapFileName))
-    print(getPacketLoss(testPcapFileName, testIP))
-
-def testParsing():
-    return
-
-testShellCmds()
