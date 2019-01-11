@@ -1,13 +1,18 @@
-# string -> [string]
-# returns list of ip addresses...?
-def parseResponsesOutput(output):
-    return
-
 # string -> double
 # returns round trip time as a single number
 def parseRTTOutput(output):
-    bitrate = output;
-    return
+    totalRTT = 0.0
+    totalPackets = 0
+
+    rawLines = output.split()
+    # filter out empty lines
+    relevantVals = list(filter(lambda line: line is not None, rawLines))
+
+    for val in relevantVals:
+        totalRTT += float(val)
+        totalPackets += 1
+
+    return totalRTT / totalPackets
 
 # string -> double
 # returns the average bitrate as a single number, calculated from bytes/duration
@@ -34,3 +39,9 @@ def parseBitrate(output):
             totalPackets += 1
 
     return totalBitrate / totalPackets
+
+# string -> int
+# returns the number of dropped packets as a single number
+def parsePacketLoss(output):
+    # TODO: Fill this in
+    return

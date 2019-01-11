@@ -1,12 +1,13 @@
 import subprocess
 
+# TODO: Move to dns resolver module later
 # string -> string
 # returns all DNS query responses with "Answers" -- includes IP Addresses from DNS payload
 # tshark -nr $pcapFileName -Y "dns" -V
-def getResponses(pcapFileName):
-    return subprocess.check_output(
-    "tshark -nr " + pcapFileName + " -Y \"dns\" -V",
-    shell=True)
+#def getResponses(pcapFileName):
+    #return subprocess.check_output(
+    #"tshark -nr " + pcapFileName + " -Y \"dns\" -V",
+    #shell=True)
 
 # string, string -> string
 # returns initial RTT (delay between SYN and SYN-ACK)
