@@ -17,11 +17,25 @@ def getRTT(pcapFileName, ipName):
     "tshark -r " + pcapFileName + " -Y \'ip.addr == " + ipName + "\' -T fields -e tcp.analysis.initial_rtt",
     shell=True)
 
-def test():
+
+# string -> [string]
+# returns list of ip addresses...?
+def parseResponsesOutput(output):
+    return
+
+# string -> double
+# returns round trip time as a single number
+def parseRTTOutput(output):
+    return
+
+def testShellCmds():
     netflixPcapFileName = "netflix.pcapng"
     testPcapFileName = "testpcap.pcapng"
     testIP = "10.8.106.202"
     print(getResponses(netflixPcapFileName))
     print(getRTT(testPcapFileName, testIP))
 
-test()
+def testParsing():
+    return
+
+testShellCmds()
