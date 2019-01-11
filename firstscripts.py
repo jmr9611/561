@@ -17,6 +17,12 @@ def getRTT(pcapFileName, ipName):
     "tshark -r " + pcapFileName + " -Y \'ip.addr == " + ipName + "\' -T fields -e tcp.analysis.initial_rtt",
     shell=True)
 
+ # string -> string
+ # returns bytes and duration for obtaining bitrate
+ # tshark -r $pcapFileName -q -z conv,tcp 
+def getBitrate(pcapFileName):
+    return subprocess.check_output(
+    "tshark -r " + pcapFileName + " -q -z conv,tcp", shell=True)
 
 # string -> [string]
 # returns list of ip addresses...?
@@ -34,6 +40,7 @@ def testShellCmds():
     testIP = "10.8.106.202"
     print(getResponses(netflixPcapFileName))
     print(getRTT(testPcapFileName, testIP))
+    print(getBitrate(testPcapFileName))
 
 def testParsing():
     return
