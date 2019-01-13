@@ -32,6 +32,9 @@ def parseRTTOutput(output):
         totalRTT += float(val)
         totalPackets += 1
 
+    if totalPackets <= 0:
+        return None
+
     return totalRTT / totalPackets
 
 # string -> double
@@ -43,6 +46,9 @@ def parseBitrate(output):
     relevantLine = rawLines[5]
 
     pktInfo = relevantLine.split()
+
+    if len(pktInfo) < 8:
+        return None
 
     totalBits = float(pktInfo[8]) / 8.0
     duration = float(pktInfo[10])
@@ -57,9 +63,12 @@ def parseBitrate(output):
 def parsePacketLoss(output):
     totalPacketCount = 0.0
     lostPacketCount = 0.0
-    for line in output:
-        totalPacketCount += 1
-        if line == "1":
-            lostPacketCount += 1
 
+    for line in output:
+        totalPacketCount += 1.0
+        if line == "1":
+            lostPacketCount += 1.0
+
+    if totalPacketCount <= 0:
+        return None
     return lostPacketCount / totalPacketCount
