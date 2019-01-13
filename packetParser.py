@@ -2,7 +2,8 @@
 # returns a mapping from service name to the set of addresses
 # it contains
 def parseDNSResponses(output):
-    return output
+    # TODO: -- fill in this function
+    return {}
 
 # string -> double
 # returns round trip time as a single number
