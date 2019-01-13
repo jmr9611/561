@@ -2,7 +2,29 @@
 # returns a mapping from service name to the set of addresses
 # it contains
 def parseDNSResponses(output):
-    # TODO: -- fill in this function
+    dnsEntryKeyword = "Domain Name System (response)"
+
+    entries = output.split(dnsEntryKeyword)
+
+    for entry in entries:
+        print(parseDNSEntry(entry))
+
+    ## TODO : use the parse entry helper method to map the service names to
+    ## all its ips
+    return {}
+
+# string -> [string : string]
+# returns a mapping from service name to ip address mapped in this entry
+def parseDNSEntry(entry):
+    for line in iter(entry.splitlines()):
+        if " addr " in line:
+            data = line.split()
+
+            serviceName = data[0]
+            ip = data[6]
+            return { serviceName : ip }
+
+    print("Failed to find a valid service name and ip mapping")
     return {}
 
 # string -> double
