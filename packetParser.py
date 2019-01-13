@@ -40,14 +40,14 @@ def parseBitrate(output):
 
     return totalBitrate / totalPackets
 
-# string -> int
-# returns the number of dropped packets as a single number
+# string -> double
+# returns the percent of packets dropped
 def parsePacketLoss(output):
-    totalPacketCount = 0 # in case this is necessary later
-    lostPacketCount = 0
+    totalPacketCount = 0.0
+    lostPacketCount = 0.0
     for line in output:
         totalPacketCount += 1
         if line == "1":
             lostPacketCount += 1
 
-    return lostPacketCount
+    return lostPacketCount / totalPacketCount
