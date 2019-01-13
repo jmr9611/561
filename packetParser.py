@@ -1,31 +1,22 @@
-# string -> [string : [string]]
+# string -> [string : set(string)]
 # returns a mapping from service name to the set of addresses
 # it contains
 def parseDNSResponses(output):
-    dnsEntryKeyword = "Domain Name System (response)"
+    serviceNameToAllIPMap = {}
 
-    entries = output.split(dnsEntryKeyword)
-
-    for entry in entries:
-        print(parseDNSEntry(entry))
-
-    ## TODO : use the parse entry helper method to map the service names to
-    ## all its ips
-    return {}
-
-# string -> [string : string]
-# returns a mapping from service name to ip address mapped in this entry
-def parseDNSEntry(entry):
-    for line in iter(entry.splitlines()):
+    for line in iter(output.splitlines()):
         if " addr " in line:
             data = line.split()
 
             serviceName = data[0]
             ip = data[6]
-            return { serviceName : ip }
 
-    print("Failed to find a valid service name and ip mapping")
-    return {}
+            if serviceName in serviceNameToAllIPMap:
+                serviceNameToAllIPMap[serviceName].add(ip)
+            else:
+                serviceNameToAllIPMap[serviceName] = set([ip])
+
+    return serviceNameToAllIPMap
 
 # string -> double
 # returns round trip time as a single number
