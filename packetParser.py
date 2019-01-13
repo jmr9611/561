@@ -1,3 +1,9 @@
+# string -> [string : [string]]
+# returns a mapping from service name to the set of addresses
+# it contains
+def parseDNSResponses(output):
+    return output
+
 # string -> double
 # returns round trip time as a single number
 def parseRTTOutput(output):
@@ -15,30 +21,22 @@ def parseRTTOutput(output):
     return totalRTT / totalPackets
 
 # string -> double
-# returns the average bitrate as a single number, calculated from bytes/duration
+# returns the average bitrate as a single number, calculated from bits/duration
 def parseBitrate(output):
-    totalBitrate = 0.0
-    totalPackets = 0
-
     rawLines = output.split("\n")
 
-    # 5 is the index where packet information starts,
-    # -2 is the index where it ends
-    relevantLines = rawLines[5:-2]
+    # 5 is the index that contains the packet information
+    relevantLine = rawLines[5]
 
-    for line in relevantLines:
-        pktInfo = line.split()
+    pktInfo = relevantLine.split()
 
-        totalBits = float(pktInfo[8]) / 8.0
-        duration = float(pktInfo[10])
+    totalBits = float(pktInfo[8]) / 8.0
+    duration = float(pktInfo[10])
 
-        if duration <= 0:
-            continue
-        else:
-            totalBitrate += totalBits / duration
-            totalPackets += 1
+    if duration <= 0:
+        return None
 
-    return totalBitrate / totalPackets
+    return totalBits / duration
 
 # string -> double
 # returns the percent of packets dropped

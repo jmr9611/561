@@ -1,13 +1,12 @@
 import subprocess
 
-# TODO: Move to dns resolver module later
 # string -> string
 # returns all DNS query responses with "Answers" -- includes IP Addresses from DNS payload
 # tshark -nr $pcapFileName -Y "dns" -V
-#def getResponses(pcapFileName):
-    #return subprocess.check_output(
-    #"tshark -nr " + pcapFileName + " -Y \"dns\" -V",
-    #shell=True)
+def getResponses(pcapFileName):
+    return subprocess.check_output(
+    "tshark -nr " + pcapFileName + " -Y \"dns\" -V",
+    shell=True)
 
 # string, string -> string
 # returns initial RTT (delay between SYN and SYN-ACK)
@@ -19,7 +18,7 @@ def getRTT(pcapFileName, ipName):
 
  # string, string -> string
  # returns bytes and duration for obtaining bitrate
- # tshark -r $pcapFileName -q -z conv,tcp,'ip.addr == $ipName' 
+ # tshark -r $pcapFileName -q -z conv,tcp,'ip.addr == $ipName'
 def getBitrate(pcapFileName, ipName):
     return subprocess.check_output(
     "tshark -r " + pcapFileName + " -q -z conv,tcp,\'ip.addr == " + ipName + "\'" , shell=True)
