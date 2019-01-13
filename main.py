@@ -32,6 +32,7 @@ def nameIPMapToNameStatsMap(serviceNameToIPMap):
 # ...?
 ## TODO: FILL THIS IN
 def analyzeData(serviceNameToStatsMap):
+    print(serviceNameToStatsMap)
     return
 
 def main():

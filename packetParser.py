@@ -11,9 +11,11 @@ def parseDNSResponses(output):
             serviceName = data[0]
             ip = data[6]
 
-            if serviceName in serviceNameToAllIPMap:
+            ipIsValid = len(ip) <= 16
+
+            if serviceName in serviceNameToAllIPMap and ipIsValid:
                 serviceNameToAllIPMap[serviceName].add(ip)
-            else:
+            elif ipIsValid:
                 serviceNameToAllIPMap[serviceName] = set([ip])
 
     return serviceNameToAllIPMap
