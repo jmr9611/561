@@ -24,15 +24,48 @@ def nameIPMapToNameStatsMap(serviceNameToIPMap):
                 statsList.append(statsTuple)
 
         if len(statsList) != 0:
-            serviceNameToStatsMap[serviceName] = statsList
+            totalRTT = 0
+            totalBitrate = 0
+            totalPacketLoss = 0
+            for st in statsList:
+                totalRTT += st[0]
+                totalBitrate += st[1]
+                totalPacketLoss += st[2]
+            avgSt = (totalRTT / len(statsList), totalBitrate / len(statsList), totalPacketLoss / len(statsList))
+            serviceNameToStatsMap[serviceName] = avgSt
 
     return serviceNameToStatsMap
 
-# Takes mapping from service names to their relevant statistics and
-# ...?
-## TODO: FILL THIS IN
+# Filters all non-video keys from the map
+def filterNameToStatsMap(serviceNameToStatsMap):
+    validKeys = ['nflx', 'youtube', 'netflix', 'hulu', 'youtbe']
+    newDict = {}
+
+    for key, val in serviceNameToStatsMap.iteritems():
+        for validKey in validKeys:
+            if validKey in key:
+                newDict[key] = val
+    return newDict
+
+# Takes mapping from service names to their relevant statistics and analyzes it
 def analyzeData(serviceNameToStatsMap):
-    print(serviceNameToStatsMap)
+    filteredMap = filterNameToStatsMap(serviceNameToStatsMap)
+
+    for name, val in filteredMap.iteritems():
+        rtt = val[0]
+        bitrate = val[1]
+        plp = val[2]
+        qos = 0
+
+        if rtt < .05:
+            qos += 1
+        if bitrate > 5000:
+            qos += 2
+        if plp < .02:
+            qos += 2
+
+        print('\n ' + name + 'RTT - ' + str(rtt) + ' Bitrate - ' + str(bitrate) + ' Packet Loss Pct. - ' + str(plp) + '\n')
+        print('Overall QoS - ' + str(qos) + '\n')
     return
 
 def main():
